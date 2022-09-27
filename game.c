@@ -7,7 +7,7 @@ int main()	{
 
 void play()	{
 	int usrin;
-	int sceneno = 0;
+	int pphase = 1;
 	char *prompt = (char*)malloc(sizeof(char)*256);
 	char *scene = (char*)malloc(sizeof(char)*256);
 
@@ -44,23 +44,29 @@ void play()	{
 			printf("A new enemy approaches!\n");
 		}
 
-		// display the scenario
-		getScene(&scene);
-		printf("%s", scene);
+		// determine whose turn it is
+		if(pphase)	{
+			// display the scenario
+			getScene(&scene);
+			printf("%s", scene);
 
-		// display prompt
-		getPrompt(&prompt, p);
-		printf("%s", prompt);
+			// display prompt
+			getPrompt(&prompt, p);
+			printf("%s", prompt);
 
-		// get terminal input
-		scanf("%d", &usrin);
-		system("clear");
+			// get terminal input
+			scanf("%d", &usrin);
+			system("clear");
 
-		// parse user command
-		playerPhase(usrin, &p, &e);
+			// parse user command
+			playerPhase(usrin, &p, &e);
+			pphase = 0;
+		} else	{
+			// enemy turn
+			enemyPhase(&p, &e);
+			pphase = 1;
+		}
 
-		// enemy turn
-		enemyPhase(&p, &e);
 	}
 }
 
