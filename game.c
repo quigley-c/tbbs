@@ -26,14 +26,10 @@ void play()	{
 	while(true)	{
 		// break condition
 		if(p.hp < 1)	{
-			free(prompt);
-			free(scene);
 			printf("You have been killed.\n");
 			printf("GAME OVER\n");
 			printf("[0. Exit] [1. Restart]\n");
 			scanf("%d", &usrin);
-			if(usrin == 1)
-				play();
 			break;
 		}
 
@@ -66,8 +62,11 @@ void play()	{
 			enemyPhase(&p, &e);
 			pphase = 1;
 		}
-
 	}
+	free(prompt);
+	free(scene);
+	if(usrin == 1)
+		play();
 }
 
 void playerPhase(int input, struct player *p, struct enemy *e)	{
